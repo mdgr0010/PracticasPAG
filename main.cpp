@@ -39,5 +39,14 @@ int main() {
     //Hace que el contexto OpenGL asociado a la ventana que acabamos de crear pase a
     //ser el contexto actual de OpenGL para las siguientes llamadas a la biblioteca
     glfwMakeContextCurrent(window);
+
+    //Ahora inicializamos GLAD
+    if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
+        std::cout << "Failed to initialize GLAD" << std::endl;
+        glfwDestroyWindow(window); //Liberamos los recursos que ocupaba GLFW
+        window = NULL;
+        glfwTerminate();
+        return -3;
+    }
     return 0;
 }
