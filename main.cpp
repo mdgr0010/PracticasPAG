@@ -20,5 +20,24 @@ int main() {
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
+
+    //Definimos el puntero para guardar la dirección de la ventana de la aplicación y
+    //la creamos
+    GLFWwindow* window;
+
+    //La siguiente línea de código define el tamaño de la ventana, el título, el estado en
+    //pantalla y no en pantalla completa y que no comparta recursos con otras ventanas
+    window = glfwCreateWindow(1024, 576, "PAG Introduction", NULL, NULL);
+
+    //Comprobamos si la creación de la ventana ha tenido éxito
+    if (window == NULL) {
+        std::cout << "Failed to create GLFW window" << std::endl;
+        glfwTerminate(); //Liberamos los recursos que ocupaba GLFW
+        return -2;
+    }
+
+    //Hace que el contexto OpenGL asociado a la ventana que acabamos de crear pase a
+    //ser el contexto actual de OpenGL para las siguientes llamadas a la biblioteca
+    glfwMakeContextCurrent(window);
     return 0;
 }
