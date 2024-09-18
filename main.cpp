@@ -21,6 +21,13 @@ void window_refresh_callback(GLFWwindow* window) {
     std::cout << "Refresh callback called" << std::endl;
 }
 
+//Esta función callback será llamada cada vez que se cambie el tamaño
+//del área de dibujo OpenGL
+void framebuffer_size_callback (GLFWwindow* window, int width, int height) {
+    glViewport(0, 0, width, height);
+    std::cout << "Resize callback called" << std::endl;
+}
+
 int main() {
     std::cout << "Starting application PAG - Prueba 01" << std::endl;
 
