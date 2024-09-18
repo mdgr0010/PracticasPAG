@@ -28,6 +28,15 @@ void framebuffer_size_callback (GLFWwindow* window, int width, int height) {
     std::cout << "Resize callback called" << std::endl;
 }
 
+//Esta función callback será llamada cada vez que se pulse una tecla
+//dirigida al área de dibujo OpenGL
+void key_callback (GLFWwindow* window, int key, int scancode, int action, int mods) {
+    if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) {
+        glfwSetWindowShouldClose(window, GLFW_TRUE);
+    }
+    std::cout << "Key callback called" << std::endl;
+}
+
 //Esta función callback será llamada cada vez que se pulse algún botón
 //del ratón sobre el área de dibujo OpenGL
 void mouse_button_callback (GLFWwindow* window, int button, int action, int mods) {
@@ -50,6 +59,9 @@ void scroll_callback (GLFWwindow* window, double xoffset, double yoffset) {
 
 int main() {
     std::cout << "Starting application PAG - Prueba 01" << std::endl;
+
+    //Este callback hay que registrarlo ANTES de llamar a glfwInit
+    glfwSetErrorCallback((GLFWerrorfun) error_callback);
 
     //Inicializa GLFW. Es un proceso que sólo debe realizarse una vez en la aplicación
     if (glfwInit() != GLFW_TRUE) {
@@ -100,6 +112,13 @@ int main() {
               << glGetString(GL_VENDOR) << std::endl
               << glGetString(GL_VERSION) << std::endl
               << glGetString(GL_SHADING_LANGUAGE_VERSION) << std::endl;
+
+    //Registramos los callbacks que responderán a los eventos principales
+    glfwSetWindowRefreshCallback(window, window_refresh_callback);
+    glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
+    glfwSetKeyCallback(window, key_callback);
+    glfwSetMouseButtonCallback(window, mouse_button_callback);
+    glfwSetScrollCallback(window, scroll_callback);
 
     //Establecemos un gris medio como color con el que se borrará el frame buffer.
     //No tiene por qué ejecutarse en cada paso por el ciclo de eventos
