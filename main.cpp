@@ -80,5 +80,12 @@ int main() {
         //de eventos y después de glfwSwapBuffers(window);
         glfwPollEvents();
     }
-    return 0;
+
+
+    //Una vez haya terminado el ciclo de eventos, liberar recursos, etc.
+    std::cout << "Finished application PAG - Prueba 01" << std::endl;
+
+    glfwDestroyWindow(window); //Cerramos y destruimosla ventana de la aplicación
+    window = NULL;
+    glfwTerminate(); //Liberamos los recursos que ocupaba GLFW
 }
