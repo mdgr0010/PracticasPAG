@@ -48,5 +48,37 @@ int main() {
         glfwTerminate();
         return -3;
     }
+
+    //Interrogamos a OpenGL para que nos informe de las propiedades del contexto
+    //3D construido
+    std::cout << glGetString(GL_RENDERER) << std::endl
+              << glGetString(GL_VENDOR) << std::endl
+              << glGetString(GL_VERSION) << std::endl
+              << glGetString(GL_SHADING_LANGUAGE_VERSION) << std::endl;
+
+    //Establecemos un gris medio como color con el que se borrará el frame buffer.
+    //No tiene por qué ejecutarse en cada paso por el ciclo de eventos
+    glClearColor(0.6, 0.6f, 0.6f, 1.0f);
+
+    //Le decimos a OpenGL que tenga en cuenta la profundidad a la hora de dibujar.
+    //No tiene por qué ejecutarse en cada paso por el ciclo de eventos
+    glEnable(GL_DEPTH_TEST);
+
+    //Ciclo de eventos de la aplicación. La condición de parada es que la
+    //ventana principal deba cerrarse. Por ejemplo, si el usuario pulsa el
+    //botón de cerrar la ventana (la X)
+    while (!glfwWindowShouldClose(window)) {
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+        //GLFW usa un doble buffer para que no haya parpadeo. Esta orden
+        //intercambia el buffer back (en el que se está dibujando) por el
+        //que se mostraba hasta ahora (front)
+        glfwSwapBuffers(window);
+
+        //Obtiene y organiza los eventos pendientes, tales como pulsaciones de
+        //teclas o de ratón, etc. Siempre al final de cada iteración del ciclo
+        //de eventos y después de glfwSwapBuffers(window);
+        glfwPollEvents();
+    }
     return 0;
 }
