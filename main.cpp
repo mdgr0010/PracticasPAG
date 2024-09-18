@@ -9,6 +9,18 @@ void error_callback (int errNo, const char *desc) {
     std::cout << "Error de GLFW número " << errNo << ": " << aux << std::endl;
 }
 
+//Esta función callback será llamada cada vez que el área de dibujo
+//OpenGL deba ser redibujada
+void window_refresh_callback(GLFWwindow* window) {
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+    //GLFW usa un doble buffer para que no haya parpadeo. Esta orden
+    //intercambia el buffer back (en el que se está dibujando) por el
+    //que se mostraba hasta ahora (front)
+    glfwSwapBuffers(window);
+    std::cout << "Refresh callback called" << std::endl;
+}
+
 int main() {
     std::cout << "Starting application PAG - Prueba 01" << std::endl;
 
@@ -74,13 +86,6 @@ int main() {
     //ventana principal deba cerrarse. Por ejemplo, si el usuario pulsa el
     //botón de cerrar la ventana (la X)
     while (!glfwWindowShouldClose(window)) {
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-        //GLFW usa un doble buffer para que no haya parpadeo. Esta orden
-        //intercambia el buffer back (en el que se está dibujando) por el
-        //que se mostraba hasta ahora (front)
-        glfwSwapBuffers(window);
-
         //Obtiene y organiza los eventos pendientes, tales como pulsaciones de
         //teclas o de ratón, etc. Siempre al final de cada iteración del ciclo
         //de eventos y después de glfwSwapBuffers(window);
