@@ -28,6 +28,18 @@ void framebuffer_size_callback (GLFWwindow* window, int width, int height) {
     std::cout << "Resize callback called" << std::endl;
 }
 
+//Esta función callback será llamada cada vez que se pulse algún botón
+//del ratón sobre el área de dibujo OpenGL
+void mouse_button_callback (GLFWwindow* window, int button, int action, int mods) {
+    if(action == GLFW_PRESS) {
+        std::cout << "Pulsado el boton: " << button << std::endl;
+    } else {
+        if(action == GLFW_RELEASE) {
+            std::cout << "Soltado el boton: " << button << std::endl;
+        }
+    }
+}
+
 int main() {
     std::cout << "Starting application PAG - Prueba 01" << std::endl;
 
