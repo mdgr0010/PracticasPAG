@@ -59,27 +59,31 @@ void scroll_callback (GLFWwindow* window, double xoffset, double yoffset) {
               << " unidades en vertical" << std::endl;
 
     //Modificamos los valores red, blue y green
-    red = red + (yoffset * 0.05f);
-    green = green + (yoffset * 0.05f);
-    blue = blue + (yoffset * 0.05f);
+    if(yoffset > 0) {
+        red = red + 0.05f; //Si se mueve la rueda del ratón hacia arriba, modificamos el rojo
 
-    //Aseguramos que los valores anteriores, permanezcan entre el 0.0f y el 1.0f
-    if(red > 1.0f) {
-        red = 1.0f;
+        if(red > 1.0f) {
+            red = 1.0f; //Aseguramos que no exceda 1.0f
+        }
+    } else {
+        //Si se movemos la rueda del ratón hacia abajo, modificamos el verde y el azul
+        green = green - 0.05f;
+        blue = blue - 0.05f;
+
+        if(green > 1.0f) {
+            green = 1.0f; //Aseguramos que no exceda el 1.0f
+        }
+        if(blue > 1.0f) {
+            blue = 1.0f; //Aseguramos que no exceda el 1.0f
+        }
     }
+
+    //Aseguramos que los valores no desciendan de 0.0f
     if(red < 0.0f) {
         red = 0.0f;
     }
-
-    if(green > 1.0f) {
-        green = 1.0f;
-    }
     if(green < 0.0f) {
         green = 0.0f;
-    }
-
-    if(blue > 1.0f) {
-        blue = 1.0f;
     }
     if(blue < 0.0f) {
         blue = 0.0f;
@@ -92,6 +96,7 @@ void scroll_callback (GLFWwindow* window, double xoffset, double yoffset) {
 
 int main() {
     std::cout << "Starting application PAG - Prueba 01" << std::endl;
+
 
     //Este callback hay que registrarlo ANTES de llamar a glfwInit
     glfwSetErrorCallback((GLFWerrorfun) error_callback);
