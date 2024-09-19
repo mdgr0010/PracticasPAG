@@ -3,6 +3,11 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
+//Variables globales para el color de fondo
+float red = 0.6f;
+float green = 0.6f;
+float blue = 0.6f;
+
 //Esta función callback será llamada cuando GLFW produzca algún error
 void error_callback (int errNo, const char *desc) {
     std::string aux(desc);
@@ -14,9 +19,6 @@ void error_callback (int errNo, const char *desc) {
 void window_refresh_callback(GLFWwindow* window) {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    //GLFW usa un doble buffer para que no haya parpadeo. Esta orden
-    //intercambia el buffer back (en el que se está dibujando) por el
-    //que se mostraba hasta ahora (front)
     glfwSwapBuffers(window);
     std::cout << "Refresh callback called" << std::endl;
 }
@@ -55,6 +57,37 @@ void scroll_callback (GLFWwindow* window, double xoffset, double yoffset) {
     std::cout << "Movida la rueda del raton " << xoffset
               << " unidades en horizontal y " << yoffset
               << " unidades en vertical" << std::endl;
+
+    //Modificamos los valores red, blue y green
+    red = red + (yoffset * 0.05f);
+    green = green + (yoffset * 0.05f);
+    blue = blue + (yoffset * 0.05f);
+
+    //Aseguramos que los valores anteriores, permanezcan entre el 0.0f y el 1.0f
+    if(red > 1.0f) {
+        red = 1.0f;
+    }
+    if(red < 0.0f) {
+        red = 0.0f;
+    }
+
+    if(green > 1.0f) {
+        green = 1.0f;
+    }
+    if(green < 0.0f) {
+        green = 0.0f;
+    }
+
+    if(blue > 1.0f) {
+        blue = 1.0f;
+    }
+    if(blue < 0.0f) {
+        blue = 0.0f;
+    }
+
+    //Cambiamos el color de fondo
+    glClearColor(red, green, blue, 1.0f);
+    std::cout << "Color de fondo actualizado: (" << red << ", " << green << ", " << blue << ")" << std::endl;
 }
 
 int main() {
@@ -122,7 +155,7 @@ int main() {
 
     //Establecemos un gris medio como color con el que se borrará el frame buffer.
     //No tiene por qué ejecutarse en cada paso por el ciclo de eventos
-    glClearColor(0.6, 0.6f, 0.6f, 1.0f);
+    glClearColor(red, green, blue, 1.0f);
 
     //Le decimos a OpenGL que tenga en cuenta la profundidad a la hora de dibujar.
     //No tiene por qué ejecutarse en cada paso por el ciclo de eventos
@@ -132,6 +165,13 @@ int main() {
     //ventana principal deba cerrarse. Por ejemplo, si el usuario pulsa el
     //botón de cerrar la ventana (la X)
     while (!glfwWindowShouldClose(window)) {
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+        //GLFW usa un doble buffer para que no haya parpadeo. Esta orden
+        //intercambia el buffer back (en el que se está dibujando) por el
+        //que se mostraba hasta ahora (front)
+        glfwSwapBuffers(window);
+
         //Obtiene y organiza los eventos pendientes, tales como pulsaciones de
         //teclas o de ratón, etc. Siempre al final de cada iteración del ciclo
         //de eventos y después de glfwSwapBuffers(window);
