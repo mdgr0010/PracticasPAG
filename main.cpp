@@ -3,6 +3,8 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
+#include "Renderer.h"
+
 //Variables globales para el color de fondo
 float red = 0.6f;
 float green = 0.6f;
