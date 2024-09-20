@@ -20,7 +20,7 @@ void error_callback (int errNo, const char *desc) {
 //Esta función callback será llamada cada vez que el área de dibujo
 //OpenGL deba ser redibujada
 void window_refresh_callback(GLFWwindow* window) {
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    PAG::Renderer::getInstancia()->refrescar();
 
     glfwSwapBuffers(window);
     std::cout << "Refresh callback called" << std::endl;

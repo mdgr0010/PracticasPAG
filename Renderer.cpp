@@ -7,7 +7,7 @@
  * @brief Implementación de la clase Renderer
  */
 
-#include <GL/glew.h>
+#include <glad//glad.h>
 
 #include "Renderer.h"
 
