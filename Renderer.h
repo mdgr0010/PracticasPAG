@@ -29,6 +29,7 @@ namespace PAG {
             static Renderer* getInstancia();
             void refrescar();
             void reedimensionar(int width, int height);
+            void cambioColor(double yoffset, float& red, float& green, float& blue, float incremento);
     };
 
 } // PAG
