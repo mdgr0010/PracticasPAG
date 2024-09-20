@@ -28,6 +28,7 @@ namespace PAG {
             virtual ~Renderer();
             static Renderer* getInstancia();
             void refrescar();
+            void reedimensionar(int width, int height);
     };
 
 } // PAG

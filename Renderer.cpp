@@ -40,4 +40,10 @@ namespace PAG {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     }
 
+    //Método para reedimensinar la escena
+    void Renderer::reedimensionar(int width, int height) {
+        glViewport(0, 0, width, height);
+    }
+
+
 } // PAG

@@ -29,7 +29,7 @@ void window_refresh_callback(GLFWwindow* window) {
 //Esta función callback será llamada cada vez que se cambie el tamaño
 //del área de dibujo OpenGL
 void framebuffer_size_callback (GLFWwindow* window, int width, int height) {
-    glViewport(0, 0, width, height);
+    PAG::Renderer::getInstancia()->reedimensionar(width, height);
     std::cout << "Resize callback called" << std::endl;
 }
 
