@@ -4,6 +4,7 @@
 #include <GLFW/glfw3.h>
 
 #include "Renderer.h"
+#include "GUI.h"
 
 //Variables globales para el color de fondo
 float red = 0.6f;
@@ -20,6 +21,7 @@ void error_callback (int errNo, const char *desc) {
 //Esta función callback será llamada cada vez que el área de dibujo
 //OpenGL deba ser redibujada
 void window_refresh_callback(GLFWwindow* window) {
+    PAG::GUI::getInstancia()->refrescar();
     PAG::Renderer::getInstancia()->refrescar();
 
     glfwSwapBuffers(window);
