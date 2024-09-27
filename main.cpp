@@ -119,10 +119,10 @@ int main() {
 
     //Interrogamos a OpenGL para que nos informe de las propiedades del contexto
     //3D construido
-    std::cout << glGetString(GL_RENDERER) << std::endl
-              << glGetString(GL_VENDOR) << std::endl
-              << glGetString(GL_VERSION) << std::endl
-              << glGetString(GL_SHADING_LANGUAGE_VERSION) << std::endl;
+    PAG::GUI::getInstancia()->AddLog((char*)glGetString(GL_RENDERER));
+    PAG::GUI::getInstancia()->AddLog((char*)glGetString(GL_VENDOR));
+    PAG::GUI::getInstancia()->AddLog((char*)glGetString(GL_VERSION));
+    PAG::GUI::getInstancia()->AddLog((char*)glGetString(GL_SHADING_LANGUAGE_VERSION));
 
     //Registramos los callbacks que responderán a los eventos principales
     glfwSetWindowRefreshCallback(window, window_refresh_callback);
@@ -140,8 +140,7 @@ int main() {
     glEnable(GL_DEPTH_TEST);
 
     //Setup Dear ImGui context
-    PAG::GUI* imgui = PAG::GUI::getInstancia();
-    imgui->init(window);
+    PAG::GUI::getInstancia()->init(window);
 
     //Ciclo de eventos de la aplicación. La condición de parada es que la
     //ventana principal deba cerrarse. Por ejemplo, si el usuario pulsa el
@@ -149,10 +148,10 @@ int main() {
     while (!glfwWindowShouldClose(window)) {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        imgui->newFrame();
-        imgui->showColorPicker(backgroundColor);
-        imgui->showConsoleWindow();
-        imgui->render();
+        PAG::GUI::getInstancia()->newFrame();
+        PAG::GUI::getInstancia()->showColorPicker(backgroundColor);
+        PAG::GUI::getInstancia()->showConsoleWindow();
+        PAG::GUI::getInstancia()->render();
 
         //GLFW usa un doble buffer para que no haya parpadeo. Esta orden
         //intercambia el buffer back (en el que se está dibujando) por el
@@ -169,7 +168,7 @@ int main() {
     //Una vez haya terminado el ciclo de eventos, liberar recursos, etc.
     std::cout << "Finished application PAG - Prueba 01" << std::endl;
 
-    imgui->cleanup();
+    PAG::GUI::getInstancia()->cleanup();
 
     glfwDestroyWindow(window); //Cerramos y destruimosla ventana de la aplicación
     window = NULL;

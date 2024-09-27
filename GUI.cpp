@@ -91,6 +91,7 @@ namespace PAG {
 
     //Función para mostrar los mensajes de consola en la ventana
     void GUI::showConsoleWindow() {
+        ImGui::SetNextWindowPos(ImVec2(10, 10), ImGuiCond_Once);
         if(ImGui::Begin("Mensajes")) {
             for (auto& log : logs) {
                 ImGui::TextUnformatted(log.c_str());
