@@ -1,34 +1,38 @@
 #include <iostream>
+#include <vector>
+#include <string>
 //IMPORTANTE: El include de GLAD debe estar siempre ANTES de el de GLFW
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
+#include "imgui/imgui.h"
+
+#include "Renderer.h"
+#include "GUI.h"
+
 //Variables globales para el color de fondo
-float red = 0.6f;
-float green = 0.6f;
-float blue = 0.6f;
+float backgroundColor[3] = {0.6f, 0.6f, 0.6f};
 float incremento = 0.05f; //Paso para incrementar o decrementar el color
 
 //Esta función callback será llamada cuando GLFW produzca algún error
 void error_callback (int errNo, const char *desc) {
     std::string aux(desc);
-    std::cout << "Error de GLFW número " << errNo << ": " << aux << std::endl;
+    PAG::GUI::getInstancia()->AddLog("Error de GLFW número %d: %s\n", errNo, aux.c_str());
 }
 
 //Esta función callback será llamada cada vez que el área de dibujo
 //OpenGL deba ser redibujada
 void window_refresh_callback(GLFWwindow* window) {
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
+    PAG::Renderer::getInstancia()->refrescar();
     glfwSwapBuffers(window);
-    std::cout << "Refresh callback called" << std::endl;
+    PAG::GUI::getInstancia()->AddLog("Refresh callback called");
 }
 
 //Esta función callback será llamada cada vez que se cambie el tamaño
 //del área de dibujo OpenGL
 void framebuffer_size_callback (GLFWwindow* window, int width, int height) {
-    glViewport(0, 0, width, height);
-    std::cout << "Resize callback called" << std::endl;
+    PAG::Renderer::getInstancia()->reedimensionar(width, height);
+    PAG::GUI::getInstancia()->AddLog("Resize callback called");
 }
 
 //Esta función callback será llamada cada vez que se pulse una tecla
@@ -37,17 +41,20 @@ void key_callback (GLFWwindow* window, int key, int scancode, int action, int mo
     if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) {
         glfwSetWindowShouldClose(window, GLFW_TRUE);
     }
-    std::cout << "Key callback called" << std::endl;
+    PAG::GUI::getInstancia()->AddLog("Key callback called");
 }
 
 //Esta función callback será llamada cada vez que se pulse algún botón
 //del ratón sobre el área de dibujo OpenGL
 void mouse_button_callback (GLFWwindow* window, int button, int action, int mods) {
+    ImGuiIO& io = ImGui::GetIO();
     if(action == GLFW_PRESS) {
-        std::cout << "Pulsado el boton: " << button << std::endl;
+        io.AddMouseButtonEvent(button, true);
+        PAG::GUI::getInstancia()->AddLog("Pulsado el botón: %d", button);
     } else {
         if(action == GLFW_RELEASE) {
-            std::cout << "Soltado el boton: " << button << std::endl;
+            io.AddMouseButtonEvent(button, false);
+            PAG::GUI::getInstancia()->AddLog("Soltado el botón: %d", button);
         }
     }
 }
@@ -55,53 +62,14 @@ void mouse_button_callback (GLFWwindow* window, int button, int action, int mods
 //Esta función callback será llamada cada vez que se mueva la rueda
 //del ratón sobre el área de dibujo OpenGL
 void scroll_callback (GLFWwindow* window, double xoffset, double yoffset) {
-    std::cout << "Movida la rueda del raton " << xoffset
-              << " unidades en horizontal y " << yoffset
-              << " unidades en vertical" << std::endl;
-
-    //Modificamos los valores red, blue y green
-    //Si se mueve la rueda del ratón hacia arriba, aumentamos los colores
-    if(yoffset > 0) {
-        red = red + incremento;
-        green = green + (incremento * 0.5f); //Incrementamos el verde más lento
-        blue = blue + (incremento * 0.3f); //Incrementamos el azul mucho más lento
-
-        //Aseguramos que los valores no incrementan de 1.0f
-        if(red > 1.0f) {
-            red = 1.0f;
-        }
-        if(green > 1.0f) {
-            green = 1.0f;
-        }
-        if(blue > 1.0f) {
-            blue = 1.0f;
-        }
-    } else {
-        //Si se movemos la rueda del ratón hacia abajo, disminuimos los colores
-        red = red - incremento;
-        green = green - (incremento * 0.5f); //Incrementamos el verde más lento
-        blue = blue - (incremento * 0.3f); //Incrementamos el azul mucho más lento
-
-        //Aseguramos que los valores no desciendan de 0.0f
-        if(red < 0.0f) {
-            red = 0.0f;
-        }
-        if(green < 0.0f) {
-            green = 0.0f;
-        }
-        if(blue < 0.0f) {
-            blue = 0.0f;
-        }
-    }
-
-    //Cambiamos el color de fondo
-    glClearColor(red, green, blue, 1.0f);
-    std::cout << "Color de fondo actualizado: (" << red << ", " << green << ", " << blue << ")" << std::endl;
+    PAG::GUI::getInstancia()->AddLog("Movida la rueda del ratón %f unidades en horizontal y %f en vertical", xoffset, yoffset);
+    PAG::Renderer::getInstancia()->cambioColor(yoffset, backgroundColor[0], backgroundColor[1], backgroundColor[2],incremento);
+    PAG::GUI::getInstancia()->AddLog("Color de fondo actualizado: (%.2f, %.2f, %.2f)", backgroundColor[0], backgroundColor[1], backgroundColor[2]);
 }
 
 int main() {
     std::cout << "Starting application PAG - Prueba 01" << std::endl;
-
+    PAG::GUI::getInstancia()->AddLog("Starting application PAG - Prueba 01");
 
     //Este callback hay que registrarlo ANTES de llamar a glfwInit
     glfwSetErrorCallback((GLFWerrorfun) error_callback);
@@ -165,17 +133,26 @@ int main() {
 
     //Establecemos un gris medio como color con el que se borrará el frame buffer.
     //No tiene por qué ejecutarse en cada paso por el ciclo de eventos
-    glClearColor(red, green, blue, 1.0f);
+    glClearColor(backgroundColor[0], backgroundColor[1], backgroundColor[2], 1.0f);
 
     //Le decimos a OpenGL que tenga en cuenta la profundidad a la hora de dibujar.
     //No tiene por qué ejecutarse en cada paso por el ciclo de eventos
     glEnable(GL_DEPTH_TEST);
+
+    //Setup Dear ImGui context
+    PAG::GUI* imgui = PAG::GUI::getInstancia();
+    imgui->init(window);
 
     //Ciclo de eventos de la aplicación. La condición de parada es que la
     //ventana principal deba cerrarse. Por ejemplo, si el usuario pulsa el
     //botón de cerrar la ventana (la X)
     while (!glfwWindowShouldClose(window)) {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+        imgui->newFrame();
+        imgui->showColorPicker(backgroundColor);
+        imgui->showConsoleWindow();
+        imgui->render();
 
         //GLFW usa un doble buffer para que no haya parpadeo. Esta orden
         //intercambia el buffer back (en el que se está dibujando) por el
@@ -191,6 +168,8 @@ int main() {
 
     //Una vez haya terminado el ciclo de eventos, liberar recursos, etc.
     std::cout << "Finished application PAG - Prueba 01" << std::endl;
+
+    imgui->cleanup();
 
     glfwDestroyWindow(window); //Cerramos y destruimosla ventana de la aplicación
     window = NULL;
