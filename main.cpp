@@ -24,7 +24,6 @@ void error_callback (int errNo, const char *desc) {
 //OpenGL deba ser redibujada
 void window_refresh_callback(GLFWwindow* window) {
     PAG::Renderer::getInstancia()->refrescar();
-
     PAG::GUI::getInstancia()->AddLog("Refresh callback called");
 }
 
@@ -142,8 +141,6 @@ int main() {
     //Setup Dear ImGui context
     PAG::GUI::getInstancia()->init(window);
 
-    PAG::Renderer::getInstancia()->creaShaderProgram();
-    PAG::Renderer::getInstancia()->creaModelo();
     PAG::Renderer::getInstancia()->inicializaOpenGL();
 
     //Ciclo de eventos de la aplicación. La condición de parada es que la

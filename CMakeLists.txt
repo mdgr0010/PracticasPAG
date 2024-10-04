@@ -13,7 +13,11 @@ add_executable(${PROJECT_NAME} main.cpp
         Renderer.h
         ${IMGUI}
         GUI.cpp
-        GUI.h)
+        GUI.h
+        ShaderProgram.cpp
+        ShaderProgram.h
+        Shader.cpp
+        Shader.h)
 
 target_link_libraries(${PROJECT_NAME} glad::glad)
 target_link_libraries(${PROJECT_NAME} glfw)

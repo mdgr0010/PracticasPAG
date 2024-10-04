@@ -10,6 +10,8 @@
 #ifndef RENDERER_H
 #define RENDERER_H
 
+#include "ShaderProgram.h"
+
 //Espacio de nombres para las prácticas de Programación de Aplicaciones Gráficas
 namespace PAG {
     /**
@@ -21,29 +23,23 @@ namespace PAG {
      * funciones callback hagan llamadas a sus métodos
      */
     class Renderer {
-    private:
-        static Renderer* instancia; //Puntero al único objeto
-        GLuint idVS = 0; //Identificador del vertex shader
-        GLuint idFS = 0; //Identificador del fragment shader
-        GLuint idSP = 0; //Identificador del shader program
-        GLuint idVAO = 0; //Identificador del vertex array object
-        GLuint idVBO = 0; //Identificador del vertex buffer object
-        GLuint idIBO = 0; //Identificador del index buffer object
-        static GLfloat vertices[]; //Matriz de vertices que forman el triángulo
-        static GLuint indices[]; //Matriz de los indices que determinan el triángulo
-        Renderer();
-    public:
-        virtual ~Renderer();
-        static Renderer* getInstancia();
-        void refrescar();
-        void reedimensionar(int width, int height);
-        void cambioColor(double yoffset, float& red, float& green, float& blue, float incremento);
-        void creaShaderProgram();
-        void creaModelo();
-        void inicializaOpenGL();
-        std::string getArchivo(std::string archivo);
-        void compilarShader(std::string shader, GLuint id, std::string shaderType);
-        void linkShaderProgram(GLuint id);
+        private:
+            static Renderer* instancia; //Puntero al único objeto
+            PAG::ShaderProgram shaderProgram; //Shader Program
+            GLuint idVAO = 0; //Identificador del vertex array object
+            GLuint idVBO = 0; //Identificador del vertex buffer object
+            GLuint idIBO = 0; //Identificador del index buffer object
+            static GLfloat vertices[]; //Matriz de vertices que forman el triángulo
+            static GLuint indices[]; //Matriz de los indices que determinan el triángulo
+            Renderer();
+        public:
+            virtual ~Renderer();
+            static Renderer* getInstancia();
+            void refrescar();
+            void reedimensionar(int width, int height);
+            void cambioColor(double yoffset, float& red, float& green, float& blue, float incremento);
+            void creaModelo();
+            void inicializaOpenGL();
     };
 
 } // PAG
