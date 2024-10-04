@@ -152,6 +152,8 @@ int main() {
     while (!glfwWindowShouldClose(window)) {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+        PAG::Renderer::getInstancia()->refrescar();
+
         PAG::GUI::getInstancia()->newFrame();
         PAG::GUI::getInstancia()->showColorPicker(backgroundColor);
         PAG::GUI::getInstancia()->showConsoleWindow();
