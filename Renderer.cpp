@@ -69,10 +69,10 @@ namespace PAG {
     void Renderer::refrescar() {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-        glUseProgram(idSP);
-        glBindVertexArray(idVAO);
-        glBindBuffer(GL_ARRAY_BUFFER, idIBO);
-        glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, nullptr);
+        glUseProgram(idSP); //Función para activar el Shader Program
+        glBindVertexArray(idVAO); //Función para activar el VAO
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, idIBO); //Función para indicarle al programa cual es la geometria a utilizar
+        glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, nullptr); //Función que permite el proceso de rendering
     }
 
     //Método para reedimensinar la escena
@@ -128,11 +128,6 @@ namespace PAG {
         std::string miVertexShader = getArchivo("v"); //Obtención del archivo que contiene el código para crear un Vertex Shader
         std::string miFragmentShader = getArchivo("f"); //Obtención del archivo que contiene el código para crear un Fragment Shader
 
-        idSP = glCreateProgram(); //Función para crear un programa
-        if(idSP == 0) {
-            std::cout << "Error creating shader program" << std::endl;
-        }
-
         idVS = glCreateShader(GL_VERTEX_SHADER); //Función que sirve para crear el Vertex Shader
         if(idVS == 0) {
             std::cout << "Error creating vertex shader" << std::endl;
@@ -147,9 +142,13 @@ namespace PAG {
             compilarShader(miFragmentShader, idFS, "FragmentShader"); //Función que compila el archivo que contiene el código fuente del shader y que lo une a un id
         }
 
+        idSP = glCreateProgram(); //Función para crear un programa
+        if(idSP == 0) {
+            std::cout << "Error creating shader program" << std::endl;
+        }
         glAttachShader(idSP, idVS); //Función que une un shader a un programa
         glAttachShader(idSP, idFS); //Función que une un shader a un programa
-        glLinkProgram(idSP); //Función que se encarga de comprobar que los shaders se hayan unido correctamente y que no haya fallos
+        linkShaderProgram(idSP); //Función que se encarga de comprobar que los shaders se hayan unido correctamente y que no haya fallos
     }
 
     /**
