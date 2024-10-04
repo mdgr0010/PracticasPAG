@@ -82,3 +82,10 @@ Este diagrama está incompleto, ya que no sabemos exactamente todos los métodos
 Una vez realizado lo que se nos pedia implementar en nuestro código, podemos modificar correctamente nuestro diagrama UML para representar correctamente la interacción entre nuestras clases:
 
 ![image](https://github.com/user-attachments/assets/32aab858-0ea0-40d7-9ea3-d57c2b5c3fe0)
+
+
+# Sesión 3: Renderizando nuestro primer triángulo
+## Trabajo autónomo
+**Responde a esta pregunta. Si redimensionas la ventana de la aplicación, verás que el triángulo no permanece igual, si no que se deforma al mismo tiempo que la ventana. ¿A qué crees que se debe este comportamiento?**
+
+Este comportamiento puede deberse a que, al los ejes estar relacionados con la escena que hemos creado, cuando modificamos la ventana en la cual se encuentra la escena, nuestra escena se modifica, modificando a su vez los ejes en los cuales creamos nuestro triángulo.
