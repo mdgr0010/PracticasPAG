@@ -145,4 +145,14 @@ namespace PAG {
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, 3 * sizeof(GLuint), indices, GL_STATIC_DRAW);
     }
 
+    /**
+     * Método para inicializar los parámetros globales de OpenGL
+     */
+    void Renderer::inicializaOpenGL() {
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        glEnable(GL_DEPTH_TEST);
+        glEnable(GL_MULTISAMPLE);
+    }
+
+
 } // PAG

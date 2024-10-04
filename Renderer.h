@@ -38,6 +38,7 @@ namespace PAG {
             void cambioColor(double yoffset, float& red, float& green, float& blue, float incremento);
             void creaShaderProgram();
             void creaModelo();
+            void inicializaOpenGL();
     };
 
 } // PAG
