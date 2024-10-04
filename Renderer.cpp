@@ -123,63 +123,57 @@ namespace PAG {
 
     /**
      * Método para crear, compilar y enlazar el shader program
-     * @note No se incluye ninguna comprobación de errores
      */
     void Renderer::creaShaderProgram() {
-        std::string miVertexShader =
-            "#version 410\n"
-            "layout (location = 0) in vec3 position;\n"
-            "void main() \n"
-            "{ gl_Position = vec4( posicion, 1 );\n"
-            "}\n";
+        std::string miVertexShader = getArchivo("v"); //Obtención del archivo que contiene el código para crear un Vertex Shader
+        std::string miFragmentShader = getArchivo("f"); //Obtención del archivo que contiene el código para crear un Fragment Shader
 
-        std::string miFragmentShader =
-            "#version 410\n"
-            "out vec4 colorFragmento;\n"
-            "void main() \n"
-            "{ colorFragmento = vec4( 1.0, .4, .2, 1.0 );\n"
-            "}\n";
+        idSP = glCreateProgram(); //Función para crear un programa
+        if(idSP == 0) {
+            std::cout << "Error creating shader program" << std::endl;
+        }
 
-        idVS = glCreateShader(GL_VERTEX_SHADER);
-        const GLchar* fuenteVS = miVertexShader.c_str();
-        glShaderSource(idVS, 1, &fuenteVS, NULL);
-        glCompileShader(idVS);
+        idVS = glCreateShader(GL_VERTEX_SHADER); //Función que sirve para crear el Vertex Shader
+        if(idVS == 0) {
+            std::cout << "Error creating vertex shader" << std::endl;
+        } else {
+            compilarShader(miVertexShader, idVS, "VertexShader"); //Función que compila el archivo que contiene el código fuente del shader y que lo une a un id
+        }
 
         idFS = glCreateShader(GL_FRAGMENT_SHADER);
-        const GLchar* fuenteFS = miFragmentShader.c_str();
-        glShaderSource(idFS, 1, &fuenteFS, NULL);
-        glCompileShader(idFS);
+        if(idFS == 0) {
+            std::cout << "Error creating fragment shader" << std::endl;
+        } else {
+            compilarShader(miFragmentShader, idFS, "FragmentShader"); //Función que compila el archivo que contiene el código fuente del shader y que lo une a un id
+        }
 
-        idSP = glCreateProgram();
-        glAttachShader(idSP, idVS);
-        glAttachShader(idSP, idFS);
-        glLinkProgram(idSP);
+        glAttachShader(idSP, idVS); //Función que une un shader a un programa
+        glAttachShader(idSP, idFS); //Función que une un shader a un programa
+        glLinkProgram(idSP); //Función que se encarga de comprobar que los shaders se hayan unido correctamente y que no haya fallos
     }
 
     /**
      * Método para crear el VAO para el modelo a renderizar
-     * @note No se incluye ninguna comprobación de errores
      */
     void Renderer::creaModelo() {
-        glGenVertexArrays(1, &idVAO);
-        glBindVertexArray(idVAO);
-        glGenBuffers(1, &idVBO);
-        glBindBuffer(GL_ARRAY_BUFFER, idVBO);
-        glBufferData(GL_ARRAY_BUFFER, 9 * sizeof(GLfloat), vertices, GL_STATIC_DRAW);
-        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), NULL);
-        glEnableVertexAttribArray(0);
-        glGenBuffers(1, &idIBO);
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, idIBO);
-        glBufferData(GL_ELEMENT_ARRAY_BUFFER, 3 * sizeof(GLuint), indices, GL_STATIC_DRAW);
+        glGenVertexArrays(1, &idVAO); //Función para la creación del VAO, en este caso se crea en el idVAO que hemos creado previamente
+        glBindVertexArray(idVAO); //Función que activa el VAO creado en la línea anterior
+        glGenBuffers(1, &idVBO); //Función para la creación del VBO, en este caso, se crea en el idVBO que hemos creado previamente
+        glBindBuffer(GL_ARRAY_BUFFER, idVBO); //Función que activa el VBO creado en la línea anterior, GL_ARRAY_BUFFER indica que se van a guardar atributos de vértices
+        glBufferData(GL_ARRAY_BUFFER, 9 * sizeof(GLfloat), vertices, GL_STATIC_DRAW); //Función que le muestra al VBO la información que necesita para completarse
+        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), NULL); //Función para indicar como están organizados los datos de un atributo del vértice en el VBO activo
+        glEnableVertexAttribArray(0); //Función que activa un atributo de vértice almacenado en el VAO activo
+        glGenBuffers(1, &idIBO); //Función para la creación del IBO, en este caso se crea uno en el idIBO que hemos creado previamente
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, idIBO); //Función que activa el  IBO creado en la línea anterior, GL_ELEMENT_ARRAY_BUFFER indica que los datos aportados anteriormente son los que hay que utilizar
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER, 3 * sizeof(GLuint), indices, GL_STATIC_DRAW); //Función que le muestra al IBO la información que necesita para completarse
     }
 
     /**
      * Método para inicializar los parámetros globales de OpenGL
      */
     void Renderer::inicializaOpenGL() {
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        glEnable(GL_DEPTH_TEST);
-        glEnable(GL_MULTISAMPLE);
+        glEnable(GL_DEPTH_TEST); //Función que activa el algoritmo del Z-Buffer
+        glEnable(GL_MULTISAMPLE); //Función para activar el antialiasing
     }
 
     /**
