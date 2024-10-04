@@ -23,6 +23,12 @@ namespace PAG {
     class Renderer {
         private:
             static Renderer* instancia; //Puntero al único objeto
+            GLuint idVS = 0; //Identificador del vertex shader
+            GLuint idFS = 0; //Identificador del fragment shader
+            GLuint idSP = 0; //Identificador del shader program
+            GLuint idVAO = 0; //Identificador del vertex array object
+            GLuint idVBO = 0; //Identificador del vertex buffer object
+            GLuint idIBO = 0; //Identificador del index buffer object
             Renderer();
         public:
             virtual ~Renderer();
