@@ -43,6 +43,7 @@ namespace PAG {
             void inicializaOpenGL();
             std::string getArchivo(std::string archivo);
             void compilarShader(std::string shader, GLuint id, std::string shaderType);
+            void linkShaderProgram(GLuint id);
     };
 
 } // PAG
