@@ -36,6 +36,7 @@ namespace PAG {
             void refrescar();
             void reedimensionar(int width, int height);
             void cambioColor(double yoffset, float& red, float& green, float& blue, float incremento);
+            void creaShaderProgram();
     };
 
 } // PAG
