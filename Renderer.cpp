@@ -9,12 +9,19 @@
 
 #include <glad//glad.h>
 
+#include <string>
+#include <fstream>
 #include "Renderer.h"
 
-#include <string>
+#include <iostream>
+#include <sstream>
 
 namespace PAG {
     PAG::Renderer* PAG::Renderer::instancia = nullptr;
+    GLfloat PAG::Renderer::vertices[] = { -.5, -.5, 0,
+                                           .5, -.5, 0,
+                                           .0, .5, 0,};
+    GLuint PAG::Renderer::indices[] = { 0, 1, 2,};
 
     //Constructor por defecto
     Renderer::Renderer() {
@@ -155,11 +162,6 @@ namespace PAG {
      * @note No se incluye ninguna comprobación de errores
      */
     void Renderer::creaModelo() {
-        GLfloat vertices[] = { -.5, -.5, 0,
-                                .5, -.5, 0,
-                                .0, .5, 0,};
-        GLuint indices[] = { 0, 1, 2,};
-
         glGenVertexArrays(1, &idVAO);
         glBindVertexArray(idVAO);
         glGenBuffers(1, &idVBO);
@@ -181,5 +183,20 @@ namespace PAG {
         glEnable(GL_MULTISAMPLE);
     }
 
+    /**
+     * Método para obtener los archivos necesarios para formar los shaders
+     */
+    std::string Renderer::getArchivo(std::string archivo) {
+        std::ifstream archivoShader;
+        archivoShader.open("pag03-" + archivo + "s.glsl");
+        if (!archivoShader.is_open()) {
+            std::cout << "Error al abrir el archivo" << std::endl;
+        }
+        std::stringstream streamShader;
+        streamShader << archivoShader.rdbuf();
+        std::string codigoFuenteShader = streamShader.str();
+        archivoShader.close();
+        return codigoFuenteShader;
+    }
 
 } // PAG

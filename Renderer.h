@@ -29,6 +29,8 @@ namespace PAG {
             GLuint idVAO = 0; //Identificador del vertex array object
             GLuint idVBO = 0; //Identificador del vertex buffer object
             GLuint idIBO = 0; //Identificador del index buffer object
+            static GLfloat vertices[]; //Matriz de vertices que forman el triángulo
+            static GLuint indices[]; //Matriz de los indices que determinan el triángulo
             Renderer();
         public:
             virtual ~Renderer();
@@ -39,6 +41,7 @@ namespace PAG {
             void creaShaderProgram();
             void creaModelo();
             void inicializaOpenGL();
+            std::string getArchivo(std::string archivo);
     };
 
 } // PAG
