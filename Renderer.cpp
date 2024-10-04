@@ -11,10 +11,9 @@
 
 #include <string>
 #include <fstream>
-#include "Renderer.h"
-
 #include <iostream>
 #include <sstream>
+#include "Renderer.h"
 
 namespace PAG {
     PAG::Renderer* PAG::Renderer::instancia = nullptr;
@@ -197,6 +196,33 @@ namespace PAG {
         std::string codigoFuenteShader = streamShader.str();
         archivoShader.close();
         return codigoFuenteShader;
+    }
+
+    /**
+     * Método que compila los shaders y muestra si existe algún error en el shader elegido
+     */
+    void Renderer::compilarShader(std::string shader, GLuint id, std::string shaderType) {
+        const GLchar* fuente = shader.c_str(); //Se obtiene el código del shader
+        glShaderSource(id, 1, &fuente, NULL); //Almacena el código fuente en el identificador del shader
+        glCompileShader(id); //Se compila el shader para asegurarnos de que todo está correcto
+        GLint compileResult;
+        glGetShaderiv(id, GL_COMPILE_STATUS, &compileResult); //Se comprueba que la compilación ha sido correcta
+        if (compileResult == GL_FALSE) {
+            GLint logLen = 0;
+            std::string logString = "";
+            glGetShaderiv(id, GL_INFO_LOG_LENGTH, &logLen);
+            if (logLen > 0) {
+                char* cLogString = new char[logLen];
+                GLint written = 0;
+                glGetShaderInfoLog(id, logLen, &written, cLogString);
+                logString.assign(cLogString);
+                delete[] cLogString;
+                std::cout << "Cannot compile shader" << shaderType << std::endl;
+                std::cout << logString << std::endl;
+            }
+        } else {
+            std::cout << shaderType << " correcto" << std::endl;
+        }
     }
 
 } // PAG
