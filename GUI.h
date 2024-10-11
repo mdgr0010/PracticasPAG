@@ -13,9 +13,9 @@
 //Espacio de nombres para las prácticas de Programación de Aplicaciones Gráficas
 namespace PAG {
 
-/**
- * @brief Clase encargada de encapsular la gestión de Dear ImGui
- */
+    /**
+     * @brief Clase encargada de encapsular la gestión de Dear ImGui
+     */
     class GUI {
         private:
             static GUI* instancia;
@@ -32,7 +32,6 @@ namespace PAG {
             void showConsoleWindow();
             void AddLog(const char* fmt, ...);
     };
-
 } // PAG
 
 #endif //GUI_H

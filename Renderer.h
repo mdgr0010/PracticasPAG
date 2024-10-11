@@ -14,6 +14,7 @@
 
 //Espacio de nombres para las prácticas de Programación de Aplicaciones Gráficas
 namespace PAG {
+
     /**
      * @brief Clase encargada de encapsular la gestión del área de dibujo
      *        OpenGL
@@ -26,6 +27,7 @@ namespace PAG {
         private:
             static Renderer* instancia; //Puntero al único objeto
             PAG::ShaderProgram shaderProgram; //Shader Program
+            float incremento = 0.05f; //Paso para incrementar o decrementar el color
             GLuint idVAO = 0; //Identificador del vertex array object
             GLuint idVBO = 0; //Identificador del vertex buffer object
             GLuint idIBO = 0; //Identificador del index buffer object
@@ -37,11 +39,10 @@ namespace PAG {
             static Renderer* getInstancia();
             void refrescar();
             void reedimensionar(int width, int height);
-            void cambioColor(double yoffset, float& red, float& green, float& blue, float incremento);
+            void cambioColor(double yoffset, float backgroundColor[]);
             void creaModelo();
             void inicializaOpenGL();
     };
-
 } // PAG
 
 #endif //RENDERER_H

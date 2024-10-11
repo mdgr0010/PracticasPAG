@@ -65,49 +65,47 @@ namespace PAG {
     }
 
     //Método para cambiar el color de fondo de la escena
-    void Renderer::cambioColor(double yoffset, float& red, float& green, float& blue, float incremento) {
+    void Renderer::cambioColor(double yoffset, float backgroundColor[]) {
         //Modificamos los valores red, blue y green
         //Si se mueve la rueda del ratón hacia arriba, aumentamos los colores
         if(yoffset > 0) {
-            red = red + incremento;
-            green = green + (incremento * 0.5f); //Incrementamos el verde más lento
-            blue = blue + (incremento * 0.3f); //Incrementamos el azul mucho más lento
+            backgroundColor[0] = backgroundColor[0] + incremento;
+            backgroundColor[1] = backgroundColor[1] + (incremento * 0.5f); //Incrementamos el verde más lento
+            backgroundColor[2] = backgroundColor[2] + (incremento * 0.3f); //Incrementamos el azul mucho más lento
 
             //Aseguramos que los valores no incrementan de 1.0f
-            if(red > 1.0f) {
-                red = 1.0f;
+            if(backgroundColor[0] > 1.0f) {
+                backgroundColor[0] = 1.0f;
             }
-            if(green > 1.0f) {
-                green = 1.0f;
+            if(backgroundColor[1] > 1.0f) {
+                backgroundColor[1] = 1.0f;
             }
-            if(blue > 1.0f) {
-                blue = 1.0f;
+            if(backgroundColor[2] > 1.0f) {
+                backgroundColor[2] = 1.0f;
             }
         } else {
             //Si se movemos la rueda del ratón hacia abajo, disminuimos los colores
-            red = red - incremento;
-            green = green - (incremento * 0.5f); //Incrementamos el verde más lento
-            blue = blue - (incremento * 0.3f); //Incrementamos el azul mucho más lento
+            backgroundColor[0] = backgroundColor[0] - incremento;
+            backgroundColor[1] = backgroundColor[1] - (incremento * 0.5f); //Incrementamos el verde más lento
+            backgroundColor[2] = backgroundColor[2] - (incremento * 0.3f); //Incrementamos el azul mucho más lento
 
             //Aseguramos que los valores no desciendan de 0.0f
-            if(red < 0.0f) {
-                red = 0.0f;
+            if(backgroundColor[0] < 0.0f) {
+                backgroundColor[0] = 0.0f;
             }
-            if(green < 0.0f) {
-                green = 0.0f;
+            if(backgroundColor[1] < 0.0f) {
+                backgroundColor[1] = 0.0f;
             }
-            if(blue < 0.0f) {
-                blue = 0.0f;
+            if(backgroundColor[2] < 0.0f) {
+                backgroundColor[2] = 0.0f;
             }
         }
 
         //Cambiamos el color de fondo
-        glClearColor(red, green, blue, 1.0f);
+        glClearColor(backgroundColor[0], backgroundColor[1], backgroundColor[2], 1.0f);
     }
 
-    /**
-     * Método para crear el VAO para el modelo a renderizar
-     */
+    //Método para crear el VAO para el modelo a renderizar
     void Renderer::creaModelo() {
         glGenVertexArrays(1, &idVAO); //Función para la creación del VAO, en este caso se crea en el idVAO que hemos creado previamente
         glBindVertexArray(idVAO); //Función que activa el VAO creado en la línea anterior
@@ -121,9 +119,7 @@ namespace PAG {
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, 3 * sizeof(GLuint), indices, GL_STATIC_DRAW); //Función que le muestra al IBO la información que necesita para completarse
     }
 
-    /**
-     * Método para inicializar los parámetros globales de OpenGL
-     */
+    //Método para inicializar los parámetros globales de OpenGL
     void Renderer::inicializaOpenGL() {
         glEnable(GL_DEPTH_TEST); //Función que activa el algoritmo del Z-Buffer
         glEnable(GL_MULTISAMPLE); //Función para activar el antialiasing

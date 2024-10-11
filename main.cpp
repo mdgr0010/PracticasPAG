@@ -12,7 +12,6 @@
 
 //Variables globales para el color de fondo
 float backgroundColor[3] = {0.6f, 0.6f, 0.6f};
-float incremento = 0.05f; //Paso para incrementar o decrementar el color
 
 //Esta función callback será llamada cuando GLFW produzca algún error
 void error_callback (int errNo, const char *desc) {
@@ -62,8 +61,7 @@ void mouse_button_callback (GLFWwindow* window, int button, int action, int mods
 //del ratón sobre el área de dibujo OpenGL
 void scroll_callback (GLFWwindow* window, double xoffset, double yoffset) {
     PAG::GUI::getInstancia()->AddLog("Movida la rueda del ratón %f unidades en horizontal y %f en vertical", xoffset, yoffset);
-    PAG::Renderer::getInstancia()->cambioColor(yoffset, backgroundColor[0], backgroundColor[1], backgroundColor[2],incremento);
-    PAG::GUI::getInstancia()->AddLog("Color de fondo actualizado: (%.2f, %.2f, %.2f)", backgroundColor[0], backgroundColor[1], backgroundColor[2]);
+    PAG::Renderer::getInstancia()->cambioColor(yoffset, backgroundColor);
 }
 
 int main() {
@@ -132,7 +130,7 @@ int main() {
 
     //Establecemos un gris medio como color con el que se borrará el frame buffer.
     //No tiene por qué ejecutarse en cada paso por el ciclo de eventos
-    glClearColor(backgroundColor[0], backgroundColor[1], backgroundColor[2], 1.0f);
+    glClearColor(0.6f, 0.6f, 0.6f, 1.0f);
 
     //Le decimos a OpenGL que tenga en cuenta la profundidad a la hora de dibujar.
     //No tiene por qué ejecutarse en cada paso por el ciclo de eventos
@@ -164,7 +162,6 @@ int main() {
         //de eventos y después de glfwSwapBuffers(window);
         glfwPollEvents();
     }
-
 
     //Una vez haya terminado el ciclo de eventos, liberar recursos, etc.
     std::cout << "Finished application PAG - Prueba 01" << std::endl;

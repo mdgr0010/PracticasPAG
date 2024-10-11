@@ -20,8 +20,6 @@
 
 #include "GUI.h"
 
-
-
 namespace PAG {
     PAG::GUI*  PAG::GUI::instancia = nullptr;
 

@@ -10,24 +10,23 @@
 #define SHADERPROGRAM_H
 
 #include <string>
+#include "Shader.h"
 
 //Espacio de nombres para las prácticas de Programación de Aplicaciones Gráficas
 namespace PAG {
+
     /**
      * @brief Clase encargada de encapsular la gestión de los Shader Program
      */
      class ShaderProgram {
          private:
-            GLuint idVS = 0; //Identificador del vertex shader
-            GLuint idFS = 0; //Identificador del fragment shader
+            Shader vertexShader;
+            Shader fragmentShader;
             GLuint idSP = 0; //Identificador del shader program
-
          public:
             ShaderProgram();
             ~ShaderProgram();
             void creaShaderProgram();
-            std::string getArchivo(std::string archivo);
-            void compilarShader(std::string shader, GLuint id, std::string shaderType);
             void linkShaderProgram(GLuint id);
             void useProgram();
      };
