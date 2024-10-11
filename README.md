@@ -83,9 +83,18 @@ Una vez realizado lo que se nos pedia implementar en nuestro código, podemos mo
 
 ![image](https://github.com/user-attachments/assets/32aab858-0ea0-40d7-9ea3-d57c2b5c3fe0)
 
-
 # Sesión 3: Renderizando nuestro primer triángulo
 ## Trabajo autónomo
 **Responde a esta pregunta. Si redimensionas la ventana de la aplicación, verás que el triángulo no permanece igual, si no que se deforma al mismo tiempo que la ventana. ¿A qué crees que se debe este comportamiento?**
 
 Este comportamiento puede deberse a que, al los ejes estar relacionados con la escena que hemos creado, cuando modificamos la ventana en la cual se encuentra la escena, nuestra escena se modifica, modificando a su vez los ejes en los cuales creamos nuestro triángulo.
+
+
+# Sesión 4: Gestionando shader programs
+## Trabajo autónomo
+**Explica en el Readme.md cómo has hecho el desacoplamiento (si has creado nuevas clases, nuevas funciones o métodos, nuevos atributos...), así como el porqué de tus decisiones. Incluye también un diagrama de clases UML**
+
+En nuestro caso, para desacoplar la gestión, ya no solo de los shader program, si no que también la de los shaders, hemos creado dos nuevas clases, en las cuales, se han movido todos los atributos y métodos relacionados con el manejo y gestión de estos objetos, para que así nuestro código pueda estar lo más desacoplado posible. Como novedad, en la clase shader program, en vez de almacenar solamente el identificador del shader, guardamos dos objetos de la clase shader, uno para nuestro vertex shader y otro para nuestro fragment shader, para que asi, su gestión y métodos este también encapsulada en una clase diferente.
+Para visualizar mejor estos cambios, vamos a modificar y añadir nuestro diagrama UML:
+
+![image](https://github.com/user-attachments/assets/8ba0ca6e-61d0-4677-bd4c-34d97c49d9fd)

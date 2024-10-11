@@ -1,5 +1,5 @@
 /**
- * @file Renderer.h
+* @file Renderer.h
  * @author mdgr0010
  *
  * @date 20/09/2024
@@ -10,8 +10,11 @@
 #ifndef RENDERER_H
 #define RENDERER_H
 
+#include "ShaderProgram.h"
+
 //Espacio de nombres para las prácticas de Programación de Aplicaciones Gráficas
 namespace PAG {
+
     /**
      * @brief Clase encargada de encapsular la gestión del área de dibujo
      *        OpenGL
@@ -23,9 +26,8 @@ namespace PAG {
     class Renderer {
         private:
             static Renderer* instancia; //Puntero al único objeto
-            GLuint idVS = 0; //Identificador del vertex shader
-            GLuint idFS = 0; //Identificador del fragment shader
-            GLuint idSP = 0; //Identificador del shader program
+            PAG::ShaderProgram shaderProgram; //Shader Program
+            float incremento = 0.05f; //Paso para incrementar o decrementar el color
             GLuint idVAO = 0; //Identificador del vertex array object
             GLuint idVBO = 0; //Identificador del vertex buffer object
             GLuint idIBO = 0; //Identificador del index buffer object
@@ -37,15 +39,11 @@ namespace PAG {
             static Renderer* getInstancia();
             void refrescar();
             void reedimensionar(int width, int height);
-            void cambioColor(double yoffset, float& red, float& green, float& blue, float incremento);
-            void creaShaderProgram();
+            void cambioColor(double yoffset, float backgroundColor[]);
             void creaModelo();
             void inicializaOpenGL();
-            std::string getArchivo(std::string archivo);
-            void compilarShader(std::string shader, GLuint id, std::string shaderType);
-            void linkShaderProgram(GLuint id);
+            //void setNombreShader(const std::string& nombreShader);
     };
-
 } // PAG
 
 #endif //RENDERER_H
