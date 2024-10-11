@@ -9,16 +9,14 @@
 */
 
 #include <iostream>
-#include <vector>
 #include <string>
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
-
 #include "imgui/imgui.h"
 #include "imgui/imgui_impl_glfw.h"
 #include "imgui/imgui_impl_opengl3.h"
-
+#include "imgui/imgui_stdlib.h"
 #include "GUI.h"
+
+#include "Renderer.h"
 
 namespace PAG {
     PAG::GUI*  PAG::GUI::instancia = nullptr;
@@ -111,4 +109,17 @@ namespace PAG {
         va_end(args);
         logs.push_back(std::string(buffer));
     }
+    //Función para introducir el nombre de los shaders en el programa
+    /**void GUI::showShaderWindow() {
+        if(ImGui::Begin("Shader")) {
+            ImGui::InputText("##", &nombreShader, ImGuiInputTextFlags_AutoSelectAll);
+            botonPulsado = ImGui::Button("Load");
+        }
+        ImGui::End();
+    }*/
+
+    /**bool GUI::getBotonPulsado() {
+        return botonPulsado;
+    }*/
+
 } // PAG

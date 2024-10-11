@@ -7,8 +7,9 @@
  * @brief Implementación de la clase Renderer
  */
 
-#include <glad//glad.h>
+#include <glad/glad.h>
 #include "Renderer.h"
+#include "GUI.h"
 
 namespace PAG {
     PAG::Renderer* PAG::Renderer::instancia = nullptr;
@@ -124,4 +125,11 @@ namespace PAG {
         glEnable(GL_DEPTH_TEST); //Función que activa el algoritmo del Z-Buffer
         glEnable(GL_MULTISAMPLE); //Función para activar el antialiasing
     }
+
+    /**void Renderer::setNombreShader(const std::string &nombreShader) {
+        if(GUI::getInstancia()->getBotonPulsado() == true) {
+            shaderProgram.setNombreShader(nombreShader);
+        }
+    }*/
+
 } // PAG

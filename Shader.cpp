@@ -49,7 +49,7 @@ namespace PAG {
     //Método para obtener los archivos necesarios para formar los shaders
     std::string Shader::getArchivo(std::string archivo) {
          std::ifstream archivoShader;
-         archivoShader.open("pag03-" + archivo + "s.glsl");
+         archivoShader.open(archivo);
          if (!archivoShader.is_open()) {
              std::cout << "Error al abrir el archivo" << std::endl;
          }

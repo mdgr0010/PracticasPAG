@@ -7,7 +7,7 @@
  * @brief Implementación de la clase ShaderProgram
  */
 
-#include <glad//glad.h>
+#include <glad/glad.h>
 #include <iostream>
 #include <string>
 #include "ShaderProgram.h"
@@ -27,8 +27,8 @@ namespace PAG {
 
     //Método para crear, compilar y enlazar el shader program
     void ShaderProgram::creaShaderProgram() {
-        std::string miVertexShader = vertexShader.getArchivo("v"); //Obtención del archivo que contiene el código para crear un Vertex Shader
-        std::string miFragmentShader = fragmentShader.getArchivo("f"); //Obtención del archivo que contiene el código para crear un Fragment Shader
+        std::string miVertexShader = vertexShader.getArchivo(nombreShader + "-vs.glsl"); //Obtención del archivo que contiene el código para crear un Vertex Shader
+        std::string miFragmentShader = fragmentShader.getArchivo(nombreShader + "-fs.glsl"); //Obtención del archivo que contiene el código para crear un Fragment Shader
 
         vertexShader.creaShader(GL_VERTEX_SHADER, miVertexShader);//Función que sirve para crear el Vertex Shader
         fragmentShader.creaShader(GL_FRAGMENT_SHADER, miFragmentShader);
@@ -69,4 +69,9 @@ namespace PAG {
     void ShaderProgram::useProgram() {
         glUseProgram(idSP);
     }
+
+    /**void ShaderProgram::setNombreShader(std::string nomShader) {
+        nombreShader = nomShader;
+    }*/
+
 } // PAG

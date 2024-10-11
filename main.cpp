@@ -4,9 +4,7 @@
 //IMPORTANTE: El include de GLAD debe estar siempre ANTES de el de GLFW
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
-
 #include "imgui/imgui.h"
-
 #include "Renderer.h"
 #include "GUI.h"
 
@@ -150,6 +148,7 @@ int main() {
         PAG::GUI::getInstancia()->newFrame();
         PAG::GUI::getInstancia()->showColorPicker(backgroundColor);
         PAG::GUI::getInstancia()->showConsoleWindow();
+        //PAG::GUI::getInstancia()->showShaderWindow();
         PAG::GUI::getInstancia()->render();
 
         //GLFW usa un doble buffer para que no haya parpadeo. Esta orden

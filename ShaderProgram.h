@@ -22,6 +22,7 @@ namespace PAG {
          private:
             Shader vertexShader;
             Shader fragmentShader;
+            std::string nombreShader = "pag03";
             GLuint idSP = 0; //Identificador del shader program
          public:
             ShaderProgram();
@@ -29,6 +30,7 @@ namespace PAG {
             void creaShaderProgram();
             void linkShaderProgram(GLuint id);
             void useProgram();
+            //void setNombreShader(std::string nomShader);
      };
 } // PAG
 

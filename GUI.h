@@ -10,6 +10,10 @@
 #ifndef GUI_H
 #define GUI_H
 
+#include <vector>
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
+
 //Espacio de nombres para las prácticas de Programación de Aplicaciones Gráficas
 namespace PAG {
 
@@ -20,6 +24,8 @@ namespace PAG {
         private:
             static GUI* instancia;
             std::vector<std::string> logs;//Vector para almacenar los mensajes del log
+            //std::string nombreShader = "";
+            //bool botonPulsado = false;
             GUI();
         public:
             virtual ~GUI();
@@ -31,6 +37,8 @@ namespace PAG {
             void showColorPicker(float backgroundColor[]);
             void showConsoleWindow();
             void AddLog(const char* fmt, ...);
+            //void showShaderWindow();
+            //bool getBotonPulsado();
     };
 } // PAG
 

@@ -42,6 +42,7 @@ namespace PAG {
             void cambioColor(double yoffset, float backgroundColor[]);
             void creaModelo();
             void inicializaOpenGL();
+            //void setNombreShader(const std::string& nombreShader);
     };
 } // PAG
 
