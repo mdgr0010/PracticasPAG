@@ -136,13 +136,14 @@ int main() {
 
     //Setup Dear ImGui context
     PAG::GUI::getInstancia()->init(window);
-
     PAG::Renderer::getInstancia()->inicializaOpenGL();
 
     //Ciclo de eventos de la aplicación. La condición de parada es que la
     //ventana principal deba cerrarse. Por ejemplo, si el usuario pulsa el
     //botón de cerrar la ventana (la X)
     while (!glfwWindowShouldClose(window)) {
+        PAG::Renderer::getInstancia()->refrescar();
+
         PAG::Renderer::getInstancia()->refrescar();
 
         PAG::GUI::getInstancia()->newFrame();

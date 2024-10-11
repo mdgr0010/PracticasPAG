@@ -8,6 +8,10 @@
  */
 
 #include <glad/glad.h>
+#include <string>
+#include <fstream>
+#include <iostream>
+#include <sstream>
 #include "Renderer.h"
 #include "GUI.h"
 
@@ -26,6 +30,7 @@ namespace PAG {
 
     //Destructor
     Renderer::~Renderer() {
+
         if(idVBO != 0) {
             glDeleteBuffers(1, &idVBO);
         }
@@ -33,7 +38,6 @@ namespace PAG {
         if(idIBO != 0) {
             glDeleteBuffers(1, &idIBO);
         }
-
         if(idVAO != 0) {
             glDeleteVertexArrays(1, &idVAO);
         }
@@ -106,7 +110,9 @@ namespace PAG {
         glClearColor(backgroundColor[0], backgroundColor[1], backgroundColor[2], 1.0f);
     }
 
-    //Método para crear el VAO para el modelo a renderizar
+    /**
+     * Método para crear el VAO para el modelo a renderizar
+     */
     void Renderer::creaModelo() {
         glGenVertexArrays(1, &idVAO); //Función para la creación del VAO, en este caso se crea en el idVAO que hemos creado previamente
         glBindVertexArray(idVAO); //Función que activa el VAO creado en la línea anterior
@@ -120,7 +126,9 @@ namespace PAG {
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, 3 * sizeof(GLuint), indices, GL_STATIC_DRAW); //Función que le muestra al IBO la información que necesita para completarse
     }
 
-    //Método para inicializar los parámetros globales de OpenGL
+    /**
+     * Método para inicializar los parámetros globales de OpenGL
+     */
     void Renderer::inicializaOpenGL() {
         glEnable(GL_DEPTH_TEST); //Función que activa el algoritmo del Z-Buffer
         glEnable(GL_MULTISAMPLE); //Función para activar el antialiasing

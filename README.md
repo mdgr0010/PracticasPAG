@@ -89,6 +89,7 @@ Una vez realizado lo que se nos pedia implementar en nuestro código, podemos mo
 
 Este comportamiento puede deberse a que, al los ejes estar relacionados con la escena que hemos creado, cuando modificamos la ventana en la cual se encuentra la escena, nuestra escena se modifica, modificando a su vez los ejes en los cuales creamos nuestro triángulo.
 
+
 # Sesión 4: Gestionando shader programs
 ## Trabajo autónomo
 **Explica en el Readme.md cómo has hecho el desacoplamiento (si has creado nuevas clases, nuevas funciones o métodos, nuevos atributos...), así como el porqué de tus decisiones. Incluye también un diagrama de clases UML**
