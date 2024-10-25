@@ -13,7 +13,9 @@ add_executable(${PROJECT_NAME} main.cpp
         Renderer.h
         ${IMGUI}
         GUI.cpp
-        GUI.h)
+        GUI.h
+        Camara.cpp
+        Camara.h)
 
 target_link_libraries(${PROJECT_NAME} glad::glad)
 target_link_libraries(${PROJECT_NAME} glfw)
